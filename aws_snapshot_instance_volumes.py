@@ -3,6 +3,7 @@ import argparse
 import json
 import sys
 import pdb
+import datetime
 
 
 def load_jsons(args):
@@ -55,6 +56,7 @@ def collect_volumes(volumes):
             continue
         this_volume = {}
         this_volume['InstanceId'] = v['Attachments'][0]['InstanceId']
+        this_volume['Device'] = v['Attachments'][0]['Device']
         this_volume['VolumeId'] = v.get('VolumeId')
         this_volume['VolumeType'] = v.get('VolumeType')
         this_volume['Iops'] = v.get('Iops')
@@ -78,6 +80,7 @@ def associate_volumes_instances(volumes, instances):
 
 def gen_aws_cli_shellcode(instances, args):
     """Write shellcode to generate volume snapshots with usable descriptions."""
+    now = str(datetime.datetime.now())
     if args.fast is False:
         background = ''
     elif args.fast is True:
@@ -87,6 +90,7 @@ def gen_aws_cli_shellcode(instances, args):
     for i in instances:
         shellcode += "# instance: %s\n" % i['InstanceId']
         for v in i['Volumes']:
+            v['timestamp'] = now
             shellcode += "echo 'instance: %s' - 'volume %s'\n" % (i['InstanceId'], v['VolumeId'])
             shellcode += "aws ec2 create-snapshot --volume-id=%s --description='%s' %s\n\n" % (v['VolumeId'], json.dumps(v), background)
     try:
