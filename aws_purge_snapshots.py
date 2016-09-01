@@ -28,7 +28,7 @@ def gen_aws_cli_shellcode(snapshots, args):
     shellcode = "#!/bin/sh\n"
     for s in snapshots:
         shellcode += "echo 'deleting snapshot: %s'\n" % (s)
-        shellcode += "aws ec2 delete-snapshot --snapshot-id=%s\n\n" % (s)
+        shellcode += "aws ec2 delete-snapshot --snapshot-id=%s %s\n\n" % (s, background)
     try:
         f = open(args.out, 'w')
         f.write(shellcode)
