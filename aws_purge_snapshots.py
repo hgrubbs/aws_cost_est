@@ -4,7 +4,6 @@ import datetime
 import argparse
 import json
 import sys
-import pdb
 
 
 def load_jsons(args):
@@ -56,7 +55,6 @@ def get_expired_snapshots(args, snapshots):
 def main(args):
     snapshots = load_jsons(args)
     expired_snapshots = get_expired_snapshots(args, snapshots)
-    pdb.set_trace()
     gen_aws_cli_shellcode(expired_snapshots, args)
     return True
 

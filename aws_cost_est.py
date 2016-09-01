@@ -2,7 +2,6 @@
 import argparse
 import json
 import sys
-import pdb
 
 # Dictionary to associate cost-per-gb with volume types
 volume_costs = {
