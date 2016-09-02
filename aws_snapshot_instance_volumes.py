@@ -73,6 +73,7 @@ def associate_volumes_instances(volumes, instances):
     for i in instances:
         for v in volumes:
             if v['InstanceId'] == i['InstanceId']:
+                v['IsBackup'] = True
                 i['Volumes'].append(v)
     return instances
 

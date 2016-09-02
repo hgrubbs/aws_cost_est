@@ -5,7 +5,6 @@ python3 aws_purge_snapshots.py \
     --snapshots snapshots.json \
     --days 3 \
     --out purge.sh \
-    --fast
 
 echo "purge.sh"
 chmod +x purge.sh
