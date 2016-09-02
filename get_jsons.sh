@@ -7,4 +7,4 @@ echo "getting volumes"
 aws ec2 describe-volumes --output json > volumes.json
 
 echo "getting snapshots"
-aws ec2 describe-snapshots --filter Name="description",Values="*dc3-srv*" --output json > snapshots.json
+aws ec2 describe-snapshots --filter Name="description",Values="*IsBackup*" --output json > snapshots.json
