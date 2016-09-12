@@ -92,7 +92,7 @@ def gen_aws_cli_shellcode(instances, args):
         for v in i['Volumes']:
             v['timestamp'] = now
             shellcode += "echo 'instance: %s' - 'volume %s'\n" % (i['InstanceId'], v['VolumeId'])
-            shellcode += "aws ec2 create-snapshot --volume-id=%s --description='%s' %s\n\n" % (v['VolumeId'], json.dumps(v), background)
+            shellcode += "aws ec2 create-snapshot --volume-id=%s --description='%s' --output=json %s\n\n" % (v['VolumeId'], json.dumps(v), background)
     try:
         f = open(args.out, 'w')
         f.write(shellcode)
